@@ -12,7 +12,7 @@ class Kanji:
 		primary_eng_def -- Most prevalent english definition of the kanji
 		alt_eng_defs -- Comma separated english definitions of the kanji
 		examp_words -- Comma separated list of words/terms using this kanji (UTF-8 encoded)
-		jlpt_lvl -- Integer JLPT level, None to indicate unknown/undefined
+		jlpt_lvl -- JLPT level, None to indicate unknown/undefined
 		ex_lit_sentence -- Example sentence using the kanji for its literal meaning (UTF-8 encoded)
 		ex_fig_sentence -- Example sentence using the kanji figuratively (UTF-8 encoded)
 		"""
@@ -25,6 +25,12 @@ class Kanji:
 		self.jlpt_lvl = jlpt_lvl
 		self.ex_lit_sentence = ex_lit_sentence
 		self.ex_fig_sentence = ex_fig_sentence
+
+	def __str__(self):
+		return "(\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\", \"{8}\")".format(
+			self.enc_character, self.onyomi_pros or "", self.kunyomi_pros or "", self.primary_eng_def or "", 
+			self.alt_eng_defs or "", self.examp_words or "", self.jlpt_lvl or "", self.ex_lit_sentence or "", 
+			self.ex_fig_sentence or "")
 		
 
 class Vocab:
@@ -50,9 +56,16 @@ class Vocab:
 		self.primary_eng_def = primary_eng_def
 		self.alt_eng_defs = alt_eng_defs
 		self.comp_kanji = comp_kanji
-		self.jlpt_lvl = jlpt_lvl
+		self.part_of_speech = part_of_speech
+		self.transitivity = transitivity
 		self.ex_lit_sentence = ex_lit_sentence
 		self.ex_fig_sentence = ex_fig_sentence
+
+	def __str__(self):
+		return "(\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\", \"{8}\")".format(
+			self.enc_vocab, self.pronuns or "", self.primary_eng_def or "", self.alt_eng_defs or "", 
+			self.comp_kanji or "", self.part_of_speech or "", self.transitivity or "", 
+			self.ex_lit_sentence or "", self.ex_fig_sentence or "")
 
 	class PartOfSpeech:
 		"""
@@ -90,6 +103,9 @@ class User:
 		"""
 		self.username = username
 
+	def __str__(self):
+		return "({0})".format(username)
+
 class Tag:
 	"""Represents a single Tag"""
 	def __init__(self, tag_id, username, term_id, term_type):
@@ -106,6 +122,9 @@ class Tag:
 		self.username = username
 		self.term_id = term_id
 		self.term_type = term_type
+
+	def __str(self):
+		return "({0}, {1}, {2}, {3})".format(username, tag_id, term_id, term_type)
 
 	class TermType:
 		"""
