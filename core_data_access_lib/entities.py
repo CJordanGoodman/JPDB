@@ -32,13 +32,13 @@ class Kanji:
 			self.alt_eng_defs, self.examp_words, self.jlpt_lvl, self.ex_lit_sentence, 
 			self.ex_fig_sentence)
 
-	def return_tuple(self):
-		''' Returns data as a tuple
+	def return_list(self):
+		''' Returns data as a list
 
-		Returns tuple in form (enc, onyomi, kunyomi, primary, alt, example, lvl, ex_lit, ex_fig)
+		Returns list in form (enc, onyomi, kunyomi, primary, alt, example, lvl, ex_lit, ex_fig)
 		'''
-		return (self.enc_character, self.onyomi_pros, self.kunyomi_pros, self.primary_eng_def, 
-			self.alt_eng_defs, self.examp_words, self.jlpt_lvl, self.ex_lit_sentence, self.ex_fig_sentence)
+		return [self.enc_character, self.onyomi_pros, self.kunyomi_pros, self.primary_eng_def, 
+			self.alt_eng_defs, self.examp_words, self.jlpt_lvl, self.ex_lit_sentence, self.ex_fig_sentence]
 		
 
 class Vocab:
@@ -74,13 +74,13 @@ class Vocab:
 			self.enc_vocab, self.pronuns, self.primary_eng_def, self.alt_eng_defs, self.comp_kanji, 
 			self.part_of_speech, self.transitivity, self.ex_lit_sentence, self.ex_fig_sentence)
 
-	def return_tuple(self):
-		''' Returns data as a tuple
+	def return_list(self):
+		''' Returns data as a list
 
-		Returns tuple in form (enc, pronouns, primary, alt, kanji, pos, transitivity, lvl, ex_lit, ex_fig)
+		Returns list in form (enc, pronouns, primary, alt, kanji, pos, transitivity, lvl, ex_lit, ex_fig)
 		'''
-		return (self.enc_vocab, self.pronuns, self.primary_eng_def, self.alt_eng_defs, self.comp_kanji, 
-			self.part_of_speech, self.transitivity, self.ex_lit_sentence, self.ex_fig_sentence)
+		return [self.enc_vocab, self.pronuns, self.primary_eng_def, self.alt_eng_defs, self.comp_kanji, 
+			self.part_of_speech, self.transitivity, self.ex_lit_sentence, self.ex_fig_sentence]
 
 	class PartOfSpeech:
 		"""
