@@ -1,7 +1,7 @@
 class Kanji:
 	"""Represents a single Kanji"""	
-	def __init__(self, enc_character, onyomi_pros=None, kunyomi_pros=None, primary_eng_def=None, \
-		alt_eng_defs=None, examp_words=None, jlpt_lvl=None, ex_lit_sentence=None, ex_fig_sentence=None):
+	def __init__(self, enc_character, onyomi_pros='', kunyomi_pros='', primary_eng_def='', \
+		alt_eng_defs='', examp_words='', jlpt_lvl='', ex_lit_sentence='', ex_fig_sentence=''):
 		"""
 		Form a Kanji.
 
@@ -28,15 +28,23 @@ class Kanji:
 
 	def __str__(self):
 		return "(\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\", \"{8}\")".format(
-			self.enc_character, self.onyomi_pros or "", self.kunyomi_pros or "", self.primary_eng_def or "", 
-			self.alt_eng_defs or "", self.examp_words or "", self.jlpt_lvl or "", self.ex_lit_sentence or "", 
-			self.ex_fig_sentence or "")
+			self.enc_character, self.onyomi_pros, self.kunyomi_pros, self.primary_eng_def, 
+			self.alt_eng_defs, self.examp_words, self.jlpt_lvl, self.ex_lit_sentence, 
+			self.ex_fig_sentence)
+
+	def return_tuple(self):
+		''' Returns data as a tuple
+
+		Returns tuple in form (enc, onyomi, kunyomi, primary, alt, example, lvl, ex_lit, ex_fig)
+		'''
+		return (self.enc_character, self.onyomi_pros, self.kunyomi_pros, self.primary_eng_def, 
+			self.alt_eng_defs, self.examp_words, self.jlpt_lvl, self.ex_lit_sentence, self.ex_fig_sentence)
 		
 
 class Vocab:
 	"""Represents a single Vocab term"""	
-	def __init__(self, enc_vocab, pronuns=None, primary_eng_def=None, alt_eng_defs=None, \
-		comp_kanji=None, part_of_speech=None, transitivity = None, ex_lit_sentence=None, ex_fig_sentence=None):
+	def __init__(self, enc_vocab, pronuns='', primary_eng_def='', alt_eng_defs='', \
+		comp_kanji='', part_of_speech='', transitivity='', ex_lit_sentence='', ex_fig_sentence=''):
 		"""
 		Form a Vocab.
 
@@ -63,9 +71,16 @@ class Vocab:
 
 	def __str__(self):
 		return "(\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\", \"{8}\")".format(
-			self.enc_vocab, self.pronuns or "", self.primary_eng_def or "", self.alt_eng_defs or "", 
-			self.comp_kanji or "", self.part_of_speech or "", self.transitivity or "", 
-			self.ex_lit_sentence or "", self.ex_fig_sentence or "")
+			self.enc_vocab, self.pronuns, self.primary_eng_def, self.alt_eng_defs, self.comp_kanji, 
+			self.part_of_speech, self.transitivity, self.ex_lit_sentence, self.ex_fig_sentence)
+
+	def return_tuple(self):
+		''' Returns data as a tuple
+
+		Returns tuple in form (enc, pronouns, primary, alt, kanji, pos, transitivity, lvl, ex_lit, ex_fig)
+		'''
+		return (self.enc_vocab, self.pronuns, self.primary_eng_def, self.alt_eng_defs, self.comp_kanji, 
+			self.part_of_speech, self.transitivity, self.ex_lit_sentence, self.ex_fig_sentence)
 
 	class PartOfSpeech:
 		"""
@@ -104,7 +119,7 @@ class User:
 		self.username = username
 
 	def __str__(self):
-		return "({0})".format(username)
+		return "({0})".format(self.username)
 
 class Tag:
 	"""Represents a single Tag"""
@@ -123,8 +138,8 @@ class Tag:
 		self.term_id = term_id
 		self.term_type = term_type
 
-	def __str(self):
-		return "({0}, {1}, {2}, {3})".format(username, tag_id, term_id, term_type)
+	def __str__(self):
+		return "({0}, {1}, {2}, {3})".format(self.username, self.tag_id, self.term_id, self.term_type)
 
 	class TermType:
 		"""

@@ -10,15 +10,12 @@ from entities import *
 def add_kanji(kanji_list):
 	conn = sqlite3.connect('jp.db')
 	cursor = conn.cursor()
-	values = []
-	for kanji in kanji_list:
-		values.append(str(kanji))
-	values_string = ", ".join(values)
 
 	execute_string = "INSERT INTO kanji (enc_char, onyomi_pros, kunyomi_pros, prim_eng_def, alt_eng_defs, " \
-					 "ex_words, jlpt_lvl, ex_lit_sent, ex_fig_sent) VALUES {0}".format(values_string) 
+					 "ex_words, jlpt_lvl, ex_lit_sent, ex_fig_sent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
-	cursor.execute(execute_string)
+	for kanji in kanji_list:
+		cursor.execute(execute_string, kanji.return_tuple())
 
 	conn.commit()
 	conn.close()
@@ -38,15 +35,13 @@ def delete_kanji(kanji_list):
 def add_vocab(vocab_list):
 	conn = sqlite3.connect('jp.db')
 	cursor = conn.cursor()
-	values = []
-	for vocab in vocab_list:
-		values.append(str(vocab))
-	values_string = ", ".join(values)
 
 	execute_string = "INSERT INTO vocab (enc_term, pros, prim_eng_def, alt_eng_defs, " \
-					 "comp_kanji, part_of_speech, transitivity, ex_lit_sent, ex_fig_sent) VALUES {0}".format(values_string) 
+					 "comp_kanji, part_of_speech, transitivity, ex_lit_sent, ex_fig_sent) " \
+					 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
-	cursor.execute(execute_string)
+	for vocab in vocab_list:
+		cursor.execute(execute_string, vocab.return_tuple())
 
 	conn.commit()
 	conn.close()
@@ -149,14 +144,15 @@ def convert_sql_string_to_vocab(row):
 		ex_lit_sentence=row[8], ex_fig_sentence=row[9])
 
 
-## The below code is an EXTREMELY basic sanity test. Be aware that it currently does not delete
-## the test data between runs, so over time it pollutes the tables with similar entries.
-## This should be replaced by more rigorous unit tests soon.
+if __name__ == '__main__':
+	## The below code is an EXTREMELY basic sanity test. Be aware that it currently does not delete
+	## the test data between runs, so over time it pollutes the tables with similar entries.
+	## This should be replaced by more rigorous unit tests soon.
 
-add_kanji([Kanji(enc_character = "abcd"), Kanji(enc_character = "efgh")])
-add_vocab([Vocab(enc_vocab = "abcd"), Vocab(enc_vocab = "efgh")])
-print(get_term("abcd", Tag.TermType.KANJI))
-print(get_term("efgh", Tag.TermType.KANJI))
-print(get_term("abcd", Tag.TermType.VOCAB))
-print(get_term("efgh", Tag.TermType.VOCAB))
+	add_kanji([Kanji(enc_character = "abcd"), Kanji(enc_character = "efgh")])
+	add_vocab([Vocab(enc_vocab = "abcd"), Vocab(enc_vocab = "efgh")])
+	print(get_term("abcd", Tag.TermType.KANJI))
+	print(get_term("efgh", Tag.TermType.KANJI))
+	print(get_term("abcd", Tag.TermType.VOCAB))
+	print(get_term("efgh", Tag.TermType.VOCAB))
 
