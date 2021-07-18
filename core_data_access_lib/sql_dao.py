@@ -38,7 +38,16 @@ def edit_kanji(kanji_list):
 
 # TODO: Define method
 def delete_kanji(kanji_list):
-	raise NotImplementedError
+	conn = sqlite3.connect('jp.db')
+	cursor = conn.cursor()
+
+	execute_string = "DELETE FROM kanji WHERE enc_char = ?"
+
+	for kanji in kanji_list:
+		cursor.execute(execute_string, (kanji.enc_character,))
+
+	conn.commit()
+	conn.close()
 
 
 ### VOCAB EDIT METHODS ###
@@ -77,7 +86,16 @@ def edit_vocab(vocab_list):
 
 # TODO: Define method
 def delete_vocab(vocab_list):
-	raise NotImplementedError
+	conn = sqlite3.connect('jp.db')
+	cursor = conn.cursor()
+
+	execute_string = "DELETE FROM vocab WHERE enc_term = ?"
+
+	for vocab in vocab_list:
+		cursor.execute(execute_string, (vocab.enc_vocab,))
+
+	conn.commit()
+	conn.close()
 
 
 ### USER EDIT METHODS ###
@@ -183,6 +201,13 @@ if __name__ == '__main__':
 
 	edit_kanji([Kanji(enc_character = "abcd", jlpt_lvl='N2')])
 	edit_vocab([Vocab(enc_vocab = "abcd", pronuns='Verb'), Vocab(enc_vocab = "efgh", pronuns='Noun')])
+	print(get_term("abcd", Tag.TermType.KANJI))
+	print(get_term("efgh", Tag.TermType.KANJI))
+	print(get_term("abcd", Tag.TermType.VOCAB))
+	print(get_term("efgh", Tag.TermType.VOCAB))
+
+	delete_kanji([Kanji(enc_character = "abcd"), Kanji(enc_character = "efgh")])
+	delete_vocab([Vocab(enc_vocab = "abcd"), Vocab(enc_vocab = "efgh")])
 	print(get_term("abcd", Tag.TermType.KANJI))
 	print(get_term("efgh", Tag.TermType.KANJI))
 	print(get_term("abcd", Tag.TermType.VOCAB))
