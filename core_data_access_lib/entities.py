@@ -1,3 +1,18 @@
+# NOTE: Multiple entries should be separated by semicolons (definition 1;def2; def in tion 3)
+
+from _typeshed import Self
+
+
+def __addStr(clf, str1: str, str2: str) -> str:
+	''' Adds str1 to str2 with a semicolon while removing leading and trailing commas
+	Needs to check a previous entries and remove duplicates
+	'''
+	strList = str1.split(';')
+	strList.extend(str2.split(';'))
+	strList = [s.strip() for s in strList] # Remove excess white space
+	strList = list(set(strList)) # Remove duplicates
+	return ';'.join(strList)
+
 class Kanji:
 	"""Represents a single Kanji"""	
 	def __init__(self, enc_character, onyomi_pros='', kunyomi_pros='', primary_eng_def='', \
@@ -39,7 +54,45 @@ class Kanji:
 		'''
 		return [self.enc_character, self.onyomi_pros, self.kunyomi_pros, self.primary_eng_def, 
 			self.alt_eng_defs, self.examp_words, self.jlpt_lvl, self.ex_lit_sentence, self.ex_fig_sentence]
+
+	def combine(self, newKanji: 'Kanji') -> bool:
+		''' Adds information from another Kanji object if the character is the same
+		newKanji: another Kanji object with the missing information
 		
+		Returns boolean if operation is successful (True)
+		'''
+		if self.enc_character == newKanji.enc_character:
+			self.onyomi_pros = __addStr(self.onyomi_pros, newKanji.onyomi_pros)
+			self.kunyomi_pros = __addStr(self.kunyomi_pros, newKanji.kunyomi_pros)
+			self.primary_eng_def = __addStr(self.primary_eng_def, newKanji.primary_eng_def)
+			self.alt_eng_defs = __addStr(self.alt_eng_defs, newKanji.alt_eng_defs)
+			self.examp_words = __addStr(self.examp_words, newKanji.examp_words)
+			self.jlpt_lvl = __addStr(self.jlpt_lvl, newKanji.jlpt_lvl)
+			self.ex_lit_sentence = __addStr(self.ex_lit_sentence, newKanji.ex_lit_sentence)
+			self.ex_fig_sentence = __addStr(self.ex_fig_sentence, newKanji.ex_fig_sentence)
+			
+			return True
+		else:
+			return False
+
+	def __add__(self, newKanji: 'Kanji') -> 'Kanji':
+		'''Adds two Kanji objects together (Kanji + Kanji)
+		If newKanji does not use the same enc_character, will return the left Kanji object
+		'''
+		if self.enc_character == newKanji.enc_character:
+			onyomi_pros = __addStr(self.onyomi_pros, newKanji.onyomi_pros)
+			kunyomi_pros = __addStr(self.kunyomi_pros, newKanji.kunyomi_pros)
+			primary_eng_def = __addStr(self.primary_eng_def, newKanji.primary_eng_def)
+			alt_eng_defs = __addStr(self.alt_eng_defs, newKanji.alt_eng_defs)
+			examp_words = __addStr(self.examp_words, newKanji.examp_words)
+			jlpt_lvl = __addStr(self.jlpt_lvl, newKanji.jlpt_lvl)
+			ex_lit_sentence = __addStr(self.ex_lit_sentence, newKanji.ex_lit_sentence)
+			ex_fig_sentence = __addStr(self.ex_fig_sentence, newKanji.ex_fig_sentence)
+			
+			return Kanji(self.enc_character,onyomi_pros, kunyomi_pros, primary_eng_def,
+				alt_eng_defs, examp_words, jlpt_lvl, ex_lit_sentence, ex_fig_sentence)
+		else:
+			return self
 
 class Vocab:
 	"""Represents a single Vocab term"""	
@@ -81,6 +134,45 @@ class Vocab:
 		'''
 		return [self.enc_vocab, self.pronuns, self.primary_eng_def, self.alt_eng_defs, self.comp_kanji, 
 			self.part_of_speech, self.transitivity, self.ex_lit_sentence, self.ex_fig_sentence]
+
+	def combine(self, newVocab: 'Vocab') -> bool:
+		''' Adds information from another Vocab object if the word is the same
+		newVocab: another Vocab object with the missing information
+		
+		Returns boolean if operation is successful (True)
+		'''
+		if self.enc_vocab == newVocab.enc_vocab:
+			self.pronuns = __addStr(self.pronuns, newVocab.pronuns)
+			self.primary_eng_def = __addStr(self.primary_eng_def, newVocab.primary_eng_def)
+			self.alt_eng_defs = __addStr(self.alt_eng_defs, newVocab.alt_eng_defs)
+			self.comp_kanji = __addStr(self.comp_kanji, newVocab.comp_kanji)
+			self.part_of_speech = __addStr(self.part_of_speech, newVocab.part_of_speech)
+			self.transitivity = __addStr(self.transitivity, newVocab.transitivity)
+			self.ex_lit_sentence = __addStr(self.ex_lit_sentence, newVocab.ex_lit_sentence)
+			self.ex_fig_sentence = __addStr(self.ex_fig_sentence, newVocab.ex_fig_sentence)
+
+			return True
+		else:
+			return False
+
+	def __add__(self, newVocab: 'Vocab') -> 'Vocab':
+		'''Adds two Vocab objects together (Vocab + Vocab)
+		If newKanji does not use the same enc_character, will return the left Vocab object
+		'''
+		if self.enc_vocab == newVocab.enc_vocab:
+			pronuns = __addStr(self.pronuns, newVocab.pronuns)
+			primary_eng_def = __addStr(self.primary_eng_def, newVocab.primary_eng_def)
+			alt_eng_defs = __addStr(self.alt_eng_defs, newVocab.alt_eng_defs)
+			comp_kanji = __addStr(self.comp_kanji, newVocab.comp_kanji)
+			part_of_speech = __addStr(self.part_of_speech, newVocab.part_of_speech)
+			transitivity = __addStr(self.transitivity, newVocab.transitivity)
+			ex_lit_sentence = __addStr(self.ex_lit_sentence, newVocab.ex_lit_sentence)
+			ex_fig_sentence = __addStr(self.ex_fig_sentence, newVocab.ex_fig_sentence)
+
+			return Vocab(self.enc_vocab, pronuns, primary_eng_def, alt_eng_defs,
+				comp_kanji, part_of_speech, transitivity, ex_lit_sentence, ex_fig_sentence)
+		else:
+			return self
 
 	class PartOfSpeech:
 		"""
