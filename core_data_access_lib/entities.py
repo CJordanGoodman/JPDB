@@ -179,16 +179,21 @@ class Vocab:
 		Enum representing all possible parts of speech for terms as listed at
 		https://en.wikibooks.org/wiki/Japanese/Grammar#Parts_of_speech
 		"""
+		UNKNOWN = -1
 		NOUN = 0
 		PRONOUN = 1
-		NA_ADJECTIVE = 2
-		VERB = 3
-		I_ADJECTIVE = 4
-		COPULA = 5
-		PARTICLE = 6
-		ADVERB = 7
-		CONJUNCTION = 8
-		INTERJECTION = 9
+		PREFIX = 2
+		SUFFIX = 3
+		ADJECTIVE = 4
+		RU_VERB = 5
+		U_VERB = 6
+		SPECIAL_VERB = 7
+		COPULA = 8
+		PARTICLE = 9
+		ADVERB = 10
+		CONJUNCTION = 11
+		INTERJECTION = 12
+		AUXILIARY = 13
 
 
 
