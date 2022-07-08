@@ -14,7 +14,7 @@ class JPDBAccessAPI:
 	### KANJI API
 
 	# TODO: Define method
-	def add_kanji(kanji: Kanji) -> None:
+	def add_kanji(self, kanji: Kanji) -> None:
 		'''Add a new kanji to the dictionary
 		If one already exists, it will create a new entry
 		
@@ -23,7 +23,7 @@ class JPDBAccessAPI:
 		add_kanji([kanji])
 
 	# TODO: Define method
-	def batch_add_kanji(kanji_list: List[Kanji]) -> None:
+	def batch_add_kanji(self, kanji_list: List[Kanji]) -> None:
 		'''Add a list of new kanji to the dictionary
 		If one already exists, it will create a new entry
 		
@@ -32,7 +32,7 @@ class JPDBAccessAPI:
 		add_kanji(kanji_list)
 
 	# TODO: Define method
-	def edit_kanji(kanji: Kanji):
+	def edit_kanji(self, kanji: Kanji):
 		''' Edits a kanji that is already in the list
 
 		:param kanji: The kanji to edit in the database
@@ -42,15 +42,13 @@ class JPDBAccessAPI:
 		edit_kanji([newKanji])
 
 	# TODO: Define method
-	def batch_edit_kanji(kanji_list: List[Kanji]):
+	def batch_edit_kanji(self, kanji_list: List[Kanji]):
 		''' Edits a list of kanji that is already in the list
 
 		:param kanji_list: The list of kanji to edit in the database
 		'''
 		for kanji in kanji_list:
-			oldKanji = get_term(kanji.enc_character,Tag.TermType.KANJI)
-			newKanji = kanji + oldKanji
-			edit_kanji([newKanji])
+			self.edit_kanji(get_term(kanji.enc_character,Tag.TermType.KANJI))
 
 	# TODO: Define method
 	def delete_kanji(kanji):
